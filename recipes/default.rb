@@ -29,17 +29,21 @@ when "ubuntu", "debian"
   # Apt installs R here.  Needed for config template below
   r_install_dir = "/usr/lib/R"
 
-  distro_name = if node['platform'] == 'debian'
-                  "#{node['lsb']['codename']}-cran/"
-                else
-                  "#{node['lsb']['codename']}/"
-                end
+  if node['platform'] == 'debian'
+    distro_name = "#{node['lsb']['codename']}-cran/"
+    keyserver_url = "pgp.mit.edu"
+    key_id = "381BA480"
+  else
+    distro_name = "#{node['lsb']['codename']}/"
+    keyserver_url = "keyserver.ubuntu.com"
+    key_id = "E084DAB9"
+  end
 
   apt_repository "cran-apt-repo" do
     uri "#{node['R']['cran_mirror']}/bin/linux/#{node['platform']}"
     distribution distro_name
-    keyserver "keyserver.ubuntu.com"
-    key "E084DAB9"
+    keyserver keyserver_url
+    key key_id
     action :add
   end
 
