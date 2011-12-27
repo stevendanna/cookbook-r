@@ -1,0 +1,5 @@
+local({
+r <- getOption("repos")
+r["CRAN"] <- "<%= @cran_mirror %>"
+options(repos = r)
+})
