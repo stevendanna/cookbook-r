@@ -1,9 +1,9 @@
 #
 # Author:: Steven Danna(<steve@opscode.com>)
 # Cookbook Name:: R
-# Provider:: package
+# Recipe:: default
 #
-# Copyright 2011, Opscode, Inc
+# Copyright 2011, Steven S. Danna (<steve@opscode.com>)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
