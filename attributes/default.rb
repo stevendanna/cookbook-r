@@ -20,9 +20,12 @@
 
 default['R']['cran_mirror'] = "http://cran.fhcrc.org/"
 
-# R version to install.  If your platform supports a package
-# based installation, set to nil to install  the latest version
-default['R']['version'] = "2.14.1"
-
-# Source install only
-default['R']['config_opts'] = [ "--with-x=no" ]
+case node['platform_family']
+when 'debian'
+  default['R']['version'] = nil
+  default['R']['install_method'] = 'package'
+else
+  default['R']['version'] = '2.14.1'
+  default['R']['install_method'] = 'package'
+  default['R']['config_opts'] = [ "--with-x=no" ]
+end
