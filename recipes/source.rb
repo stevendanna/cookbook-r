@@ -3,14 +3,6 @@ major_version = r_version.split(".").first
 
 url = "#{node['R']['cran_mirror']}/src/base/R-#{major_version}/R-#{r_version}.tar.gz"
 
-# By default, source install places R here.
-# Needed for config template below
-r_install_dir = if node['kernel']['machine'] == 'x86_64'
-                  "/usr/local/lib64/R"
-                else
-                  "/usr/local/lib/R"
-                end
-
 # Command to check if we should be installing R or not.
 is_installed_command = "R --version | grep -q #{r_version}"
 

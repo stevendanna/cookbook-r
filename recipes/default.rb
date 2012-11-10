@@ -27,10 +27,13 @@ when "source"
   include_recipe "r-project::source"
 end
 
-
-when "centos", "redhat"
-  # On CentOs and RHEL we install from source
-
+# By default, source install places R here.
+# Needed for config template below
+r_install_dir = if node['kernel']['machine'] == 'x86_64'
+                  "/usr/local/lib64/R"
+                else
+                  "/usr/local/lib/R"
+                end
 
 # Setting the default CRAN mirror makes
 # remote administration of R much easier.
