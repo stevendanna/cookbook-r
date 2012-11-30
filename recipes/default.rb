@@ -18,22 +18,21 @@
 # limitations under the License.
 #
 
-
-
-case node['install_method']
+case node['R']['install_method']
 when "package"
+  # Apt installs R here.  Needed for config template below
+  r_install_dir = "/usr/lib/R"
   include_recipe "r-project::package"
 when "source"
+  # By default, source install places R here.
+  # Needed for config template below
+  r_install_dir = if node['kernel']['machine'] == 'x86_64'
+                    "/usr/local/lib64/R"
+                  else
+                    "/usr/local/lib/R"
+                  end
   include_recipe "r-project::source"
 end
-
-# By default, source install places R here.
-# Needed for config template below
-r_install_dir = if node['kernel']['machine'] == 'x86_64'
-                  "/usr/local/lib64/R"
-                else
-                  "/usr/local/lib/R"
-                end
 
 # Setting the default CRAN mirror makes
 # remote administration of R much easier.

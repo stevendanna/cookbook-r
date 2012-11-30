@@ -4,9 +4,6 @@ include_recipe "apt"
 
 r_version = node['R']['version']
 
-# Apt installs R here.  Needed for config template below
-r_install_dir = "/usr/lib/R"
-
 if node['platform'] == 'debian'
   distro_name = "#{node['lsb']['codename']}-cran/"
   keyserver_url = "pgp.mit.edu"
