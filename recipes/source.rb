@@ -9,20 +9,23 @@ is_installed_command = "R --version | grep -q #{r_version}"
 include_recipe "build-essential"
 package "gcc-gfortran"
 
-remote_file "/tmp/R-#{r_version}.tar.gz" do
+remote_file "#{Chef::Config[:file_cache_path]}/R-#{r_version}.tar.gz" do
   source url
   mode "644"
   checksum node['R']['checksum']
 end
 
 execute "Install R from Source" do
-  cwd "/tmp"
+  cwd Chef::Config[:file_cache_path]
   command <<-CODE
 set -e
 tar xvf R-#{r_version}.tar.gz
-(cd /tmp/R-#{r_version} && ./configure #{node['R']['config_opts'].join(" ")})
-(cd /tmp/R-#{r_version} && make)
-(cd /tmp/R-#{r_version} && make install)
+(
+cd #{Chef::Config[:file_cache_path]}/R-#{r_version}
+./configure #{node['R']['config_opts'].join(" ")}
+make
+make install
+)
 CODE
   not_if is_installed_command
 end
