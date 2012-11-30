@@ -13,11 +13,16 @@ Requirements
 Attributes
 ==========
 
+* `node['R']['install_method']`: Specifies either "source" or
+  "package" install method.
+
 * `node['R']['cran_mirror]`: Used by the Rprofile.site template
 to set the system-wide default CRAN mirror.
 
 * `node['R']['version']`: The R version to install.  When using Apt, set
 to nil to always get the latest version.
+
+* `node['R']['checksum']`: SHA256-sum of the R source package.
 
 * `node['R']['config_opts]`: Options to pass to R's configure
   script. Source install only.
