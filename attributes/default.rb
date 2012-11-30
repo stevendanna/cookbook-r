@@ -26,6 +26,7 @@ when 'debian'
   default['R']['install_method'] = 'package'
 else
   default['R']['version'] = '2.15.2'
+  default['R']['checksum'] = '292837ae259b7668509b8a5d4ec8be0aa50c327cfe7a534bac419b4ca766d66d'
   default['R']['install_method'] = 'package'
   default['R']['config_opts'] = [ "--with-x=no" ]
 end

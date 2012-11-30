@@ -12,8 +12,7 @@ package "gcc-gfortran"
 remote_file "/tmp/R-#{r_version}.tar.gz" do
   source url
   mode "644"
-  not_if is_installed_command
-  action :create_if_missing
+  checksum node['R']['checksum']
 end
 
 execute "Install R from Source" do
