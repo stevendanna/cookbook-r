@@ -25,7 +25,7 @@ when 'debian'
   default['R']['version'] = nil
   default['R']['install_method'] = 'package'
 else
-  default['R']['version'] = '2.14.1'
+  default['R']['version'] = '2.15.2'
   default['R']['install_method'] = 'package'
   default['R']['config_opts'] = [ "--with-x=no" ]
 end
