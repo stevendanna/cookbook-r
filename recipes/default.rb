@@ -37,6 +37,6 @@ end
 # Setting the default CRAN mirror makes
 # remote administration of R much easier.
 template "#{r_install_dir}/etc/Rprofile.site" do
-  mode "777"
+  mode "0555"
   variables( :cran_mirror => node['R']['cran_mirror'])
 end
