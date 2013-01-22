@@ -3,7 +3,8 @@
 # Cookbook Name:: R
 # Recipe:: default
 #
-# Copyright 2011, Steven S. Danna (<steve@opscode.com>)
+# Copyright 2011-2013, Steven S. Danna (<steve@opscode.com>)
+# Copyright 2013, Mark Van de Vyver (<mark@taqtiqa.com>)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,21 +20,21 @@
 #
 
 action :install do
-  execute "Install R Package" do
+  execute 'Install R Package' do
     command r_package_install(new_resource.package)
     not_if r_package_is_installed(new_resource.package)
   end
 end
 
 action :upgrade do
-  execute "Upgrade R Package" do
+  execute 'Upgrade R Package' do
     command r_package_install(new_resource.package)
   end
 end
 
 action :remove do
   r_package_remove = "remove.packages('#{new_resource.package}')"
-  execute "Remove R Package" do
+  execute 'Remove R Package' do
     command "echo \"#{r_package_remove}\" | R --no-save --no-restore -q"
     only_if r_package_is_installed(new_resource.package)
   end
