@@ -3,7 +3,8 @@
 # Cookbook Name:: R
 # Attribute:: default
 #
-# Copyright 2011, Steven S. Danna (<steve@opscode.com>)
+# Copyright 2011-2013, Steven S. Danna (<steve@opscode.com>)
+# Copyright 2013, Mark Van de Vyver (<mark@taqtiqa.com>)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,15 +19,15 @@
 # limitations under the License.
 #
 
-default['R']['cran_mirror'] = "http://cran.fhcrc.org/"
+default['r']['cran_mirror'] = "http://cran.fhcrc.org/"
 
 case node['platform_family']
 when 'debian'
-  default['R']['version'] = nil
-  default['R']['install_method'] = 'package'
+  default['r']['version'] = nil
+  default['r']['install_method'] = 'package'
 else
-  default['R']['version'] = '2.15.2'
-  default['R']['checksum'] = '292837ae259b7668509b8a5d4ec8be0aa50c327cfe7a534bac419b4ca766d66d'
-  default['R']['install_method'] = 'source'
-  default['R']['config_opts'] = [ "--with-x=no" ]
+  default['r']['version'] = '2.15.2'
+  default['r']['checksum'] = '292837ae259b7668509b8a5d4ec8be0aa50c327cfe7a534bac419b4ca766d66d'
+  default['r']['install_method'] = 'source'
+  default['r']['config_opts'] = [ "--with-x=no" ]
 end
