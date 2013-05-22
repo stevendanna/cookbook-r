@@ -19,16 +19,22 @@
 # limitations under the License.
 #
 
+def whyrun_supported? 
+  true
+end
+
 action :install do
   execute 'Install R Package' do
     command r_package_install(new_resource.package)
     not_if r_package_is_installed(new_resource.package)
+    new_resource.updated_by_last_action(true)
   end
 end
 
 action :upgrade do
   execute 'Upgrade R Package' do
     command r_package_install(new_resource.package)
+    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -37,6 +43,7 @@ action :remove do
   execute 'Remove R Package' do
     command "echo \"#{r_package_remove}\" | R --no-save --no-restore -q"
     only_if r_package_is_installed(new_resource.package)
+    new_resource.updated_by_last_action(true)
   end
 end
 
