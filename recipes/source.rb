@@ -22,31 +22,17 @@
 r_version = node['r']['version']
 major_version = r_version.split(".").first
 
-url = "#{node['r']['cran_mirror']}/src/base/R-#{major_version}/R-#{r_version}.tar.gz"
-
 # Command to check if we should be installing R or not.
 is_installed_command = "R --version | grep -q #{r_version}"
 
-include_recipe "build-essential"
 package "gcc-gfortran"
 
-remote_file "#{Chef::Config[:file_cache_path]}/R-#{r_version}.tar.gz" do
-  source url
-  mode "644"
-  checksum node['r']['checksum']
-end
+include_recipe "build-essential"
+include_recipe "ark"
 
-execute "Install R from Source" do
-  cwd Chef::Config[:file_cache_path]
-  command <<-CODE
-set -e
-tar xvf R-#{r_version}.tar.gz
-(
-cd #{Chef::Config[:file_cache_path]}/R-#{r_version}
-./configure #{node['r']['config_opts'].join(" ")}
-make
-make install
-)
-CODE
+ark "Install R from sources" do
+  url "#{node['r']['cran_mirror']}/src/base/R-#{major_version}/R-#{r_version}.tar.gz"
+  autoconf_opts node['r']['config_opts'] if node['r']['config_opts']
+  action :install_with_make
   not_if is_installed_command
-end
+end 
