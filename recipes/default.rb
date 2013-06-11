@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+chef_gem "rinruby"
+
 case node['r']['install_method']
 when "package"
   # Apt installs R here.  Needed for config template below

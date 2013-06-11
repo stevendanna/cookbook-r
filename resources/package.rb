@@ -20,7 +20,11 @@
 #
 
 actions :install, :remove, :upgrade
+default_action :install
+
 attribute :package, :kind_of => String, :name_attribute => true
+
+attr_accessor :exists
 
 def initialize(*args)
   super
