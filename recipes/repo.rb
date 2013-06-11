@@ -1,7 +1,8 @@
 #
 # Author:: Steven Danna(<steve@opscode.com>)
+# Author:: Guilhem Lettron <guilhem.lettron@youscribe.com
 # Cookbook Name:: R
-# Recipe:: default
+# Recipe:: repo
 #
 # Copyright 2011-2013, Steven S. Danna (<steve@opscode.com>)
 # Copyright 2013, Mark Van de Vyver (<mark@taqtiqa.com>)
@@ -19,17 +20,29 @@
 # limitations under the License.
 #
 
-chef_gem "rinruby"
+case node['platform_family']
+when "debian"
+  include_recipe "apt"
 
-if node['r']['install_repo']
-  include_recipe "r::repo"
-end
+  case node['platform']
+  when "debian"
+    distro_name = "#{node['lsb']['codename']}-cran"
+    keyserver_url = "pgp.mit.edu"
+    key_id = "381BA480"
+  when "ubuntu"
+    distro_name = node['lsb']['codename']
+    keyserver_url = "keyserver.ubuntu.com"
+    key_id = "E084DAB9"
+  else
+    return "platform not supported"
+  end
 
-include_recipe "r::install_#{node['r']['install_method']}"
-
-# Setting the default CRAN mirror makes
-# remote administration of R much easier.
-template "#{node['r']['install_dir']}/etc/Rprofile.site" do
-  mode "0555"
-  variables( :cran_mirror => node['r']['cran_mirror'])
+  apt_repository "cran-apt-repo" do
+    uri "#{node['r']['cran_mirror']}/bin/linux/#{node['platform']}"
+    distribution "#{distro_name}/"
+    components []
+    keyserver keyserver_url
+    key key_id
+    action :add
+  end
 end

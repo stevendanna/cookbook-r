@@ -23,11 +23,13 @@ default['r']['cran_mirror'] = "http://cran.fhcrc.org/"
 
 case node['platform_family']
 when 'debian'
-  default['r']['version'] = nil
   default['r']['install_method'] = 'package'
+  default['r']['install_repo']   = true
 else
-  default['r']['version'] = '2.15.2'
-  default['r']['checksum'] = '292837ae259b7668509b8a5d4ec8be0aa50c327cfe7a534bac419b4ca766d66d'
+  default['r']['version']        = '2.15.2'
+  default['r']['checksum']       = '292837ae259b7668509b8a5d4ec8be0aa50c327cfe7a534bac419b4ca766d66d'
   default['r']['install_method'] = 'source'
-  default['r']['config_opts'] = [ "--with-x=no" ]
+  default['r']['config_opts']    = [ "--with-x=no" ]
 end
+
+default['r']['install_dev'] = true
