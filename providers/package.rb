@@ -26,27 +26,27 @@ end
 
 action :install do
   if @current_resource.exists
-    Chef::Log.info "#{ @new_resource } already exists - nothing to do."
+    Chef::Log.info "#{ @new_resource.name } already exists - nothing to do."
   else
-    converge_by("Create #{ @new_resource }") do
+    converge_by("Create #{ @new_resource.name }") do
       install_package
     end
   end
 end
 
 action :upgrade do
-  converge_by("Create #{ @new_resource }") do
+  converge_by("Create #{ @new_resource.name }") do
     install_package
   end
 end
 
 action :remove do
   if @current_resource.exists
-    converge_by("Remove #{ @new_resource }") do
+    converge_by("Remove #{ @new_resource.name }") do
       remove_package
     end
   else
-    Chef::Log.info "#{ @new_resource } don't exists - nothing to do."
+    Chef::Log.info "#{ @new_resource.name } doesn't exists - nothing to do."
   end
 end
 
