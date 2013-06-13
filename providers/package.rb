@@ -19,38 +19,60 @@
 # limitations under the License.
 #
 
+# Support whyrun
+def whyrun_supported?
+  true
+end
+
 action :install do
-  execute 'Install R Package' do
-    command r_package_install(new_resource.package)
-    not_if r_package_is_installed(new_resource.package)
+  if @current_resource.exists
+    Chef::Log.info "#{ @new_resource.name } already exists - nothing to do."
+  else
+    converge_by("Create #{ @new_resource.name }") do
+      install_package
+    end
   end
 end
 
 action :upgrade do
-  execute 'Upgrade R Package' do
-    command r_package_install(new_resource.package)
+  converge_by("Create #{ @new_resource.name }") do
+    install_package
   end
 end
 
 action :remove do
-  r_package_remove = "remove.packages('#{new_resource.package}')"
-  execute 'Remove R Package' do
-    command "echo \"#{r_package_remove}\" | R --no-save --no-restore -q"
-    only_if r_package_is_installed(new_resource.package)
+  if @current_resource.exists
+    converge_by("Remove #{ @new_resource.name }") do
+      remove_package
+    end
+  else
+    Chef::Log.info "#{ @new_resource.name } doesn't exists - nothing to do."
   end
 end
 
-
-# The following helper functions construct strings that can be run as
-# Bash commands. For example, as the input of not_if or only_if
-# statements
-
-def r_package_is_installed(package_name)
-  r_code = "if (any(installed.packages()[,1] == '#{package_name}')) { quit('no', 0, FALSE) }; quit('no', 1, FALSE)"
-  "echo \"#{r_code}\" | R --no-save --no-restore -q"
+def load_current_resource
+  @current_resource = Chef::Resource::RPackage.new(@new_resource.name)
+  @current_resource.name(@new_resource.name)
+  @current_resource.package(@new_resource.package)
+  if package_installed?(@current_resource.package)
+    @current_resource.exists = true
+  end
 end
 
-def r_package_install(package_name)
-  r_code = "install.packages('#{package_name}')"
-  "echo \"#{r_code}\" | R --no-save --no-restore -q"
+def install_package
+  ruby_block "Install R package #{new_resource.package}" do
+    block do
+      require "rinruby"
+      R.eval "install.packages(#{new_resource.package})"
+    end
+  end
+end
+
+def remove_package
+  ruby_block "Remove R package #{new_resource.package}" do
+    block do
+      require "rinruby"
+      R.eval "remove.packages(#{new_resource.package})"
+    end
+  end
 end
