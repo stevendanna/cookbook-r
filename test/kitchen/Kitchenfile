@@ -1,3 +1,0 @@
-cookbook "r" do
-  lint(:ignore => ["FC017", "FC021"])
-end
