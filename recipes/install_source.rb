@@ -30,9 +30,9 @@ package "gcc-gfortran"
 include_recipe "build-essential"
 include_recipe "ark"
 
-ark "Install R from sources" do
+ark "R-#{r_version}" do
   url "#{node['r']['cran_mirror']}/src/base/R-#{major_version}/R-#{r_version}.tar.gz"
   autoconf_opts node['r']['config_opts'] if node['r']['config_opts']
-  action :install_with_make
+  action [:configure, :install_with_make]
   not_if is_installed_command
-end 
+end
