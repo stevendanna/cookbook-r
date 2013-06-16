@@ -1,3 +1,4 @@
+name             "r"
 maintainer       "Steven Danna"
 maintainer_email "steve@opscode.com"
 license          "Apache 2.0"
