@@ -26,8 +26,9 @@ when "debian"
 
   case node['platform']
   when "debian"
-    distro_name = "#{node['lsb']['codename']}-cran"
-    keyserver_url = "pgp.mit.edu"
+    # detail info http://cran.r-project.org/bin/linux/debian/
+    distro_name = "#{node['lsb']['codename']}-cran3"
+    keyserver_url = "subkeys.pgp.net"
     key_id = "381BA480"
   when "ubuntu"
     distro_name = node['lsb']['codename']
