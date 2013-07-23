@@ -1,7 +1,8 @@
 #
 # Author:: Steven Danna(<steve@opscode.com>)
+# Author:: Guilhem Lettron <guilhem.lettron@youscribe.com
 # Cookbook Name:: R
-# Attribute:: default
+# Recipe:: repo
 #
 # Copyright 2011-2013, Steven S. Danna (<steve@opscode.com>)
 # Copyright 2013, Mark Van de Vyver (<mark@taqtiqa.com>)
@@ -19,17 +20,30 @@
 # limitations under the License.
 #
 
-default['r']['cran_mirror'] = "http://cran.fhcrc.org/"
-
 case node['platform_family']
-when 'debian'
-  default['r']['install_method'] = 'package'
-  default['r']['install_repo']   = true
-else
-  default['r']['version']        = '2.15.2'
-  default['r']['checksum']       = '292837ae259b7668509b8a5d4ec8be0aa50c327cfe7a534bac419b4ca766d66d'
-  default['r']['install_method'] = 'source'
-  default['r']['config_opts']    = [ "--with-x=no" ]
-end
+when "debian"
+  include_recipe "apt"
 
-default['r']['install_dev'] = true
+  case node['platform']
+  when "debian"
+    # detail info http://cran.r-project.org/bin/linux/debian/
+    distro_name = "#{node['lsb']['codename']}-cran3"
+    keyserver_url = "subkeys.pgp.net"
+    key_id = "381BA480"
+  when "ubuntu"
+    distro_name = node['lsb']['codename']
+    keyserver_url = "keyserver.ubuntu.com"
+    key_id = "E084DAB9"
+  else
+    return "platform not supported"
+  end
+
+  apt_repository "cran-apt-repo" do
+    uri "#{node['r']['cran_mirror']}/bin/linux/#{node['platform']}"
+    distribution "#{distro_name}/"
+    components []
+    keyserver keyserver_url
+    key key_id
+    action :add
+  end
+end
