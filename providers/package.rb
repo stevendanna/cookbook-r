@@ -60,19 +60,11 @@ def load_current_resource
 end
 
 def install_package
-  ruby_block "Install R package #{new_resource.package}" do
-    block do
-      require "rinruby"
-      R.eval "install.packages(#{new_resource.package})"
-    end
-  end
+  require "rinruby"
+  R.eval "install.packages('#{new_resource.package}')", false
 end
 
 def remove_package
-  ruby_block "Remove R package #{new_resource.package}" do
-    block do
-      require "rinruby"
-      R.eval "remove.packages(#{new_resource.package})"
-    end
-  end
+  require "rinruby"
+  R.eval "remove.packages('#{new_resource.package}')", false
 end
