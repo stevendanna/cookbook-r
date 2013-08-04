@@ -26,7 +26,12 @@ when "debian"
 
   case node['platform']
   when "debian"
-    distro_name = "#{node['lsb']['codename']}-cran"
+    postfix = if node['r']['version'] && node['r']['version'].split(".").first == "2"
+                ""
+              else
+                "3"
+              end
+    distro_name = "#{node['lsb']['codename']}-cran#{postfix}"
     keyserver_url = "pgp.mit.edu"
     key_id = "381BA480"
   when "ubuntu"

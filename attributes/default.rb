@@ -26,8 +26,8 @@ when 'debian'
   default['r']['install_method'] = 'package'
   default['r']['install_repo']   = true
 else
-  default['r']['version']        = '2.15.2'
-  default['r']['checksum']       = '292837ae259b7668509b8a5d4ec8be0aa50c327cfe7a534bac419b4ca766d66d'
+  default['r']['version']        = '3.0.1'
+  default['r']['checksum']       = 'af90488af3141103b211dc81b6f17d1f0faf4f17684c579a32dfeb25d0d87134'
   default['r']['install_method'] = 'source'
   default['r']['config_opts']    = [ "--with-x=no" ]
 end

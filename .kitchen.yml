@@ -20,7 +20,10 @@ platforms:
   driver_config:
     box: opscode-centos-5.9
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
-
+- name: debian-7
+  driver_config:
+    box: opscode-debian-7.1
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
 suites:
 - name: default
   run_list: ["recipe[r]"]
