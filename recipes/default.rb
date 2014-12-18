@@ -27,6 +27,15 @@ end
 
 include_recipe "r::install_#{node['r']['install_method']}"
 
+
+# Creating /etc/ folder in installation directory if not existing before (preventing potential directory not found errors)
+# Note: Only directories that did not exist before will be assigned to the given user, in this case: root
+directory node['r']['install_dir'] + '/etc' do
+  owner 'root'
+  group 'root'
+  recursive true
+end
+
 # Setting the default CRAN mirror makes
 # remote administration of R much easier.
 template "#{node['r']['install_dir']}/etc/Rprofile.site" do
