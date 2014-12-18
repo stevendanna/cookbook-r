@@ -30,6 +30,10 @@ package "gcc-gfortran"
 include_recipe "build-essential"
 include_recipe "ark"
 
+# installs package (lib)readline(-dev), which is necessary for (output of) R-installation (ie. configure-step)
+#   another option is to install/configure with parameter "--with-readline=no"
+include_recipe 'readline'
+
 ark "R-#{r_version}" do
   url "#{node['r']['cran_mirror']}/src/base/R-#{major_version}/R-#{r_version}.tar.gz"
   autoconf_opts node['r']['config_opts'] if node['r']['config_opts']

@@ -9,6 +9,7 @@ version          "0.3.0"
 depends "apt"
 depends "ark"
 depends "build-essential"
+depends 'readline'          # in case of future problems: was working with v0.0.3
 
 supports "ubuntu"
 supports "centos"
