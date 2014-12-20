@@ -54,7 +54,8 @@ def load_current_resource
   @current_resource = Chef::Resource::RPackage.new(@new_resource.name)
   @current_resource.name(@new_resource.name)
   @current_resource.package(@new_resource.package)
-  if package_installed?(@current_resource.package)
+  
+  if r_package_installed?(@current_resource.package)
     @current_resource.exists = true
   end
 end
