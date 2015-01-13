@@ -1,9 +1,7 @@
 include_attribute "r"
 
-
-case node['r']['install_method']
-when "package"
+if node['r']['install_method'] == 'package' and node['platform_family'] == 'debian'
   default['r']['install_dir'] = "/usr/lib/R"
-when "source"
+else
   default['r']['install_dir'] = node['kernel']['machine'] == 'x86_64' ? "/usr/local/lib64/R" : "/usr/local/lib/R"
 end

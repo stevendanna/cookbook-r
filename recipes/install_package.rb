@@ -1,7 +1,7 @@
 #
 # Author:: Steven Danna(<steve@opscode.com>)
 # Cookbook Name:: R
-# Recipe:: package
+# Recipe:: install_package
 #
 # Copyright 2011-2013, Steven S. Danna (<steve@opscode.com>)
 # Copyright 2013, Mark Van de Vyver (<mark@taqtiqa.com>)
@@ -19,14 +19,29 @@
 # limitations under the License.
 #
 
-package 'r-base' do
-  version node['r']['version'] if node['r']['version']
-  action :install
-end
-
-if node['r']['install_dev']
-  package 'r-base-dev' do
+case node['platform_family']
+when 'debian'
+  package 'r-base' do
     version node['r']['version'] if node['r']['version']
     action :install
+  end
+
+  if node['r']['install_dev']
+    package 'r-base-dev' do
+      version node['r']['version'] if node['r']['version']
+      action :install
+    end
+  end
+when 'rhel'
+  if node['r']['install_dev']
+    package 'R-devel' do
+      version node['r']['version'] if node['r']['version']
+      action :install
+    end
+  else
+    package 'R' do
+      version node['r']['version'] if node['r']['version']
+      action :install
+    end
   end
 end

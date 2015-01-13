@@ -1,6 +1,5 @@
 #
 # Author:: Steven Danna(<steve@opscode.com>)
-# Author:: Guilhem Lettron <guilhem.lettron@youscribe.com
 # Cookbook Name:: R
 # Recipe:: repo
 #

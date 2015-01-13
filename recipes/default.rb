@@ -20,6 +20,7 @@
 #
 
 chef_gem "rinruby"
+require 'fileutils'
 
 if node['r']['install_repo']
   include_recipe "r::repo"
@@ -32,4 +33,9 @@ include_recipe "r::install_#{node['r']['install_method']}"
 template "#{node['r']['install_dir']}/etc/Rprofile.site" do
   mode "0555"
   variables( :cran_mirror => node['r']['cran_mirror'])
+end
+
+dirname = "/usr/local/lib64/R/etc"
+unless File.directory?(dirname)
+  FileUtils.mkdir_p(dirname)
 end

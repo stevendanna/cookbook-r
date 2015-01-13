@@ -1,7 +1,7 @@
 #
 # Author:: Steven Danna(<steve@opscode.com>)
 # Cookbook Name:: R
-# Recipe:: default
+# Recipe:: install_source
 #
 # Copyright 2011-2013, Steven S. Danna (<steve@opscode.com>)
 # Copyright 2013, Mark Van de Vyver (<mark@taqtiqa.com>)
@@ -33,6 +33,14 @@ include_recipe "ark"
 ark "R-#{r_version}" do
   url "#{node['r']['cran_mirror']}/src/base/R-#{major_version}/R-#{r_version}.tar.gz"
   autoconf_opts node['r']['config_opts'] if node['r']['config_opts']
-  action [:configure, :install_with_make]
+  action [:configure]
+  not_if is_installed_command
+end
+
+bash "build-and-install-r" do
+  user "root"
+  code <<-EOH
+  (cd /usr/local/R-#{r_version}-1/ && make && make install)
+  EOH
   not_if is_installed_command
 end
