@@ -30,8 +30,7 @@ package "gcc-gfortran"
 include_recipe "build-essential"
 include_recipe "ark"
 
-# installs package (lib)readline(-dev), which is necessary for (output of) R-installation (ie. configure-step)
-#   another option is to install/configure with parameter "--with-readline=no"
+# required unless "--with-readline=no" is used
 include_recipe 'readline'
 
 ark "R-#{r_version}" do
