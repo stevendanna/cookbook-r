@@ -36,6 +36,6 @@ include_recipe 'readline'
 ark "R-#{r_version}" do
   url "#{node['r']['cran_mirror']}/src/base/R-#{major_version}/R-#{r_version}.tar.gz"
   autoconf_opts node['r']['config_opts'] if node['r']['config_opts']
-  action [:configure, :install_with_make]
+  action [:install_with_make]
   not_if is_installed_command
 end
