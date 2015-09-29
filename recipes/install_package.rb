@@ -27,5 +27,5 @@ end
 package 'r-base-dev' do
   version node['r']['version'] if node['r']['version']
   action :install
-  only_if node['r']['install_dev']
+  only_if { node['r']['install_dev'] == true }
 end

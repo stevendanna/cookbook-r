@@ -19,7 +19,9 @@
 # limitations under the License.
 #
 
-chef_gem 'rinruby'
+chef_gem 'rinruby' do
+  compile_time false if respond_to?(:compile_time)
+end
 
 include_recipe 'r::repo' if node['r']['install_repo']
 
@@ -36,4 +38,5 @@ end
 template "#{node['r']['install_dir']}/etc/Rprofile.site" do
   mode '0555'
   variables(cran_mirror: node['r']['cran_mirror'])
+  manage_symlink_source true if respond_to?(:manage_symlink_source)
 end
