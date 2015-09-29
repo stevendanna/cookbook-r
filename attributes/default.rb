@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-default['r']['cran_mirror'] = "http://cran.fhcrc.org/"
+default['r']['cran_mirror'] = 'http://cran.fhcrc.org/'
 
 case node['platform_family']
 when 'debian'
@@ -29,7 +29,7 @@ else
   default['r']['version']        = '3.0.1'
   default['r']['checksum']       = 'af90488af3141103b211dc81b6f17d1f0faf4f17684c579a32dfeb25d0d87134'
   default['r']['install_method'] = 'source'
-  default['r']['config_opts']    = [ "--with-x=no" ]
+  default['r']['config_opts']    = ['--with-x=no']
 end
 
 default['r']['install_dev'] = true

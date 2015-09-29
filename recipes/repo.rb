@@ -21,28 +21,28 @@
 #
 
 case node['platform_family']
-when "debian"
-  include_recipe "apt"
+when 'debian'
+  include_recipe 'apt'
 
   case node['platform']
-  when "debian"
-    postfix = if node['r']['version'] && node['r']['version'].split(".").first == "2"
-                ""
+  when 'debian'
+    postfix = if node['r']['version'] && node['r']['version'].split('.').first == '2'
+                ''
               else
-                "3"
+                '3'
               end
     distro_name = "#{node['lsb']['codename']}-cran#{postfix}"
-    keyserver_url = "pgp.mit.edu"
-    key_id = "381BA480"
-  when "ubuntu"
+    keyserver_url = 'pgp.mit.edu'
+    key_id = '381BA480'
+  when 'ubuntu'
     distro_name = node['lsb']['codename']
-    keyserver_url = "keyserver.ubuntu.com"
-    key_id = "E084DAB9"
+    keyserver_url = 'keyserver.ubuntu.com'
+    key_id = 'E084DAB9'
   else
-    return "platform not supported"
+    return 'platform not supported'
   end
 
-  apt_repository "cran-apt-repo" do
+  apt_repository 'cran-apt-repo' do
     uri "#{node['r']['cran_mirror']}/bin/linux/#{node['platform']}"
     distribution "#{distro_name}/"
     components []

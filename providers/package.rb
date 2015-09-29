@@ -26,27 +26,27 @@ end
 
 action :install do
   if @current_resource.exists
-    Chef::Log.info "#{ @new_resource.name } already exists - nothing to do."
+    Chef::Log.info "#{@new_resource.name} already exists - nothing to do."
   else
-    converge_by("Create #{ @new_resource.name }") do
+    converge_by("Create #{@new_resource.name}") do
       install_package
     end
   end
 end
 
 action :upgrade do
-  converge_by("Create #{ @new_resource.name }") do
+  converge_by("Create #{@new_resource.name}") do
     install_package
   end
 end
 
 action :remove do
   if @current_resource.exists
-    converge_by("Remove #{ @new_resource.name }") do
+    converge_by("Remove #{@new_resource.name}") do
       remove_package
     end
   else
-    Chef::Log.info "#{ @new_resource.name } doesn't exists - nothing to do."
+    Chef::Log.info "#{@new_resource.name} doesn't exists - nothing to do."
   end
 end
 
@@ -54,18 +54,18 @@ def load_current_resource
   @current_resource = Chef::Resource::RPackage.new(@new_resource.name)
   @current_resource.name(@new_resource.name)
   @current_resource.package(@new_resource.package)
-  
-  if r_package_installed?(@current_resource.package)
+
+  only_if r_package_installed?(@current_resource.package) do
     @current_resource.exists = true
   end
 end
 
 def install_package
-  require "rinruby"
+  require 'rinruby'
   R.eval "install.packages('#{new_resource.package}')", false
 end
 
 def remove_package
-  require "rinruby"
+  require 'rinruby'
   R.eval "remove.packages('#{new_resource.package}')", false
 end

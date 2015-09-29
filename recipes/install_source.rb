@@ -20,15 +20,15 @@
 #
 
 r_version = node['r']['version']
-major_version = r_version.split(".").first
+major_version = r_version.split('.').first
 
 # Command to check if we should be installing R or not.
 is_installed_command = "R --version | grep -q #{r_version}"
 
-package "gcc-gfortran"
+package 'gcc-gfortran'
 
-include_recipe "build-essential"
-include_recipe "ark"
+include_recipe 'build-essential'
+include_recipe 'ark'
 
 # required unless "--with-readline=no" is used
 include_recipe 'readline'
