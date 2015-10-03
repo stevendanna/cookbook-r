@@ -19,11 +19,11 @@
 # limitations under the License.
 #
 
-chef_gem "rinruby"
-
-if node['r']['install_repo']
-  include_recipe "r::repo"
+chef_gem 'rinruby' do
+  compile_time false if respond_to?(:compile_time)
 end
+
+include_recipe 'r::repo' if node['r']['install_repo']
 
 include_recipe "r::install_#{node['r']['install_method']}"
 
@@ -36,6 +36,7 @@ end
 # Setting the default CRAN mirror makes
 # remote administration of R much easier.
 template "#{node['r']['install_dir']}/etc/Rprofile.site" do
-  mode "0555"
-  variables( :cran_mirror => node['r']['cran_mirror'])
+  mode '0555'
+  variables(cran_mirror: node['r']['cran_mirror'])
+  manage_symlink_source true if respond_to?(:manage_symlink_source)
 end

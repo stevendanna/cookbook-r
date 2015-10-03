@@ -24,7 +24,7 @@ package 'r-base' do
   action :install
 end
 
-if node['r']['install_dev']
+if node['r']['install_dev'] # ~FC023
   package 'r-base-dev' do
     version node['r']['version'] if node['r']['version']
     action :install

@@ -22,7 +22,7 @@
 actions :install, :remove, :upgrade
 default_action :install
 
-attribute :package, :kind_of => String, :name_attribute => true
+attribute :package, kind_of: String, name_attribute: true
 
 attr_accessor :exists
 

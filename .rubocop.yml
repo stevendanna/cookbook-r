@@ -1,0 +1,38 @@
+AllCops:
+  Include:
+    - '**/Berksfile'
+    - '**/Gemfile'
+    - '**/Rakefile'
+    - '**/Thorfile'
+    - '**/Guardfile'
+  Exclude:
+    - vendor/**
+
+Style/AlignParameters:
+  Exclude:
+    - '**/metadata.rb'
+
+Style/SingleSpaceBeforeFirstArg:
+  Exclude:
+    - '**/metadata.rb'
+
+ClassLength:
+  Enabled: ture
+Documentation:
+  Enabled: true
+Encoding:
+  Enabled: false
+HashSyntax:
+  Enabled: true
+LineLength:
+  Enabled: false
+MethodLength:
+  Exclude:
+    - '**/Rakefile'
+  Enabled: true
+SignalException:
+  Enabled: true
+TrailingComma:
+  Enabled: true
+WordArray:
+  Enabled: true
