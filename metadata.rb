@@ -13,3 +13,5 @@ depends 'readline'
 
 supports 'ubuntu'
 supports 'centos'
+supports 'amazon'
+supports 'debian'

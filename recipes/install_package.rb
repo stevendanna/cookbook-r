@@ -19,7 +19,16 @@
 # limitations under the License.
 #
 
-package 'r-base' do
+pkg_name = case node['platform_family']
+           when 'rhel'
+             'R'
+           when 'debian'
+             'r-base'
+           else
+             'r_base'
+end
+
+package pkg_name do
   version node['r']['version'] if node['r']['version']
   action :install
 end
