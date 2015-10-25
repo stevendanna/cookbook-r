@@ -19,7 +19,8 @@
 # limitations under the License.
 #
 
-chef_gem 'rinruby' do
+
+chef_gem 'rinruby' do # ~FC009
   compile_time false if respond_to?(:compile_time)
 end
 
