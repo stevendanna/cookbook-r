@@ -55,9 +55,7 @@ def load_current_resource
   @current_resource.name(@new_resource.name)
   @current_resource.package(@new_resource.package)
 
-  only_if r_package_installed?(@current_resource.package) do
-    @current_resource.exists = true
-  end
+  @current_resource.exists = r_package_installed?(@current_resource.package)
 end
 
 def install_package
