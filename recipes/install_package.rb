@@ -28,6 +28,8 @@ pkg_name = case node['platform_family']
              'r_base'
            end
 
+include_recipe 'yum-epel::default' if node['platform_family'] == 'rhel'
+
 package pkg_name do
   version node['r']['version'] if node['r']['version']
   action :install

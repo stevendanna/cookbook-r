@@ -10,6 +10,7 @@ depends 'apt'
 depends 'ark'
 depends 'build-essential'
 depends 'readline'
+depends 'yum-epel', '>=2.0.0'
 
 supports 'ubuntu'
 supports 'centos'
