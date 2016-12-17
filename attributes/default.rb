@@ -32,9 +32,9 @@ else
   default['r']['config_opts']    = ['--with-x=no']
 end
 
-case node['platform_family']
-when 'rhel'
-  default['r']['install_dev'] = false
-else
-  default['r']['install_dev'] = true
-end
+default['r']['install_dev'] = case node['platform_family']
+                              when 'rhel'
+                                false
+                              else
+                                true
+                              end

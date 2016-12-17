@@ -26,7 +26,7 @@ pkg_name = case node['platform_family']
              'r-base'
            else
              'r_base'
-end
+           end
 
 package pkg_name do
   version node['r']['version'] if node['r']['version']
