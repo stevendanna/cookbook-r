@@ -22,7 +22,7 @@
 default['r']['cran_mirror'] = 'http://cran.fhcrc.org/'
 
 case node['platform_family']
-when 'debian'
+when 'debian', 'rhel'
   default['r']['install_method'] = 'package'
   default['r']['install_repo']   = true
 else
@@ -32,4 +32,9 @@ else
   default['r']['config_opts']    = ['--with-x=no']
 end
 
-default['r']['install_dev'] = true
+default['r']['install_dev'] = case node['platform_family']
+                              when 'rhel'
+                                false
+                              else
+                                true
+                              end

@@ -19,7 +19,18 @@
 # limitations under the License.
 #
 
-package 'r-base' do
+pkg_name = case node['platform_family']
+           when 'rhel'
+             'R'
+           when 'debian'
+             'r-base'
+           else
+             'r_base'
+           end
+
+include_recipe 'yum-epel::default' if node['platform_family'] == 'rhel'
+
+package pkg_name do
   version node['r']['version'] if node['r']['version']
   action :install
 end

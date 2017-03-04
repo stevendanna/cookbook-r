@@ -12,7 +12,7 @@ Style/AlignParameters:
   Exclude:
     - '**/metadata.rb'
 
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Exclude:
     - '**/metadata.rb'
 
@@ -32,7 +32,9 @@ MethodLength:
   Enabled: true
 SignalException:
   Enabled: true
-TrailingComma:
+TrailingCommaInLiteral:
+  Enabled: true
+TrailingCommaInArguments:
   Enabled: true
 WordArray:
   Enabled: true
