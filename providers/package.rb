@@ -58,10 +58,30 @@ def load_current_resource
   @current_resource.exists = r_package_installed?(@current_resource.package)
 end
 
+# rubocop:disable MethodLength
 def install_package
   require 'rinruby'
-  R.eval "install.packages('#{new_resource.package}')", false
+
+  r = RinRuby.new(echo: false)
+
+  r.eval <<EOF
+      flag <- tryCatch(
+          {
+              install.packages('#{new_resource.package}')
+              0
+          },
+          error = function(cond) {
+              return(1)
+          },
+          warning = function(cond) {
+              return(2)
+          }
+      )
+EOF
+
+  raise "Something went wrong with install of R package '#{new_resource.package}'" unless r.flag.zero?
 end
+# rubocop:enable MethodLength
 
 def remove_package
   require 'rinruby'
