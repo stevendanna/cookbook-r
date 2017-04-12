@@ -51,7 +51,7 @@ action :remove do
 end
 
 def load_current_resource
-  @current_resource = Chef::Resource::RPackage.new(@new_resource.name)
+  @current_resource = Chef::Resource.resource_for_node(:package, node)
   @current_resource.name(@new_resource.name)
   @current_resource.package(@new_resource.package)
 
