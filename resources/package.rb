@@ -19,14 +19,59 @@
 # limitations under the License.
 #
 
+# Support whyrun
+def whyrun_supported?
+  true
+end
+
 actions :install, :remove, :upgrade
 default_action :install
 
 attribute :package, kind_of: String, name_attribute: true
+attribute :exists, kind_of: [TrueClass, FalseClass]
 
-attr_accessor :exists
+def load_current_value
+  exists r_package_installed?(package)
+end
 
 def initialize(*args)
   super
   @action = :install
+end
+
+action :install do
+  if exists
+    Chef::Log.info "#{package} already exists - nothing to do."
+  else
+    converge_by("Create #{package}") do
+      install_package
+    end
+  end
+end
+
+action :upgrade do
+  converge_by("Create #{package}") do
+    install_package
+  end
+end
+
+action :remove do
+  if exists
+    converge_by("Remove #{package}") do
+      remove_package
+    end
+  else
+    Chef::Log.info "#{package} doesn't exists - nothing to do."
+  end
+end
+
+
+def install_package
+  require 'rinruby'
+  R.eval "install.packages('#{package}')", false
+end
+
+def remove_package
+  require 'rinruby'
+  R.eval "remove.packages('#{package}')", false
 end
